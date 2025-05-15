@@ -1,4 +1,5 @@
 import { twMerge } from 'tailwind-merge';
+import TextButton from '../components/TextButton';
 
 const data = [
   {
@@ -40,7 +41,7 @@ const FeaturesCards = () => {
           solutions.
         </h2>
 
-        <div className="mt-36 md:mt-48 flex overflow-x-scroll">
+        <div className="mt-36 md:mt-48 flex">
           <div className="flex flex-none gap-8">
             {data.map(({ color, description, image, title }, i) => {
               return (
@@ -80,16 +81,7 @@ const FeaturesCards = () => {
                   </h3>
                   <p className="text-lg text-zinc-400 mt-4">{description}</p>
                   <div className="flex justify-between mt-12">
-                    <button className={
-                      twMerge(
-                        'inline-flex items-center gap-2 text-lg font-semibold text-zinc-500 group-hover:text-zinc-300 transition duration-300',
-                        color === 'lime' && 'text-lime-500 group-hover:text-lime-300',
-                        color === 'cyan' && 'text-cyan-500 group-hover:text-cyan-300',
-                        color === 'violet' && 'text-violet-500 group-hover:text-violet-300',
-                      )
-                    }>
-                      Learn More
-                    </button>
+                    <TextButton color={color}>Learn More</TextButton>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
