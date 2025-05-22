@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import TextButton from '../components/TextButton';
 import Card from '../components/Card';
 
 const data = [
@@ -34,6 +34,20 @@ const data = [
 ];
 
 const FeaturesCards = () => {
+  const [selectedCardIndex, setSelectedCardIndex] = useState(0);
+  const [isHover, setIsHover] = useState(false)
+
+  useEffect(() => {
+    if (isHover) return;
+    const timer = setTimeout(() => {
+      setSelectedCardIndex((prevIndex) =>
+        prevIndex === data.length - 1 ? 0 : prevIndex + 1,
+      );
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [selectedCardIndex, isHover]);
+
   return (
     <section className="py-24 overflow-x-clip md:-mt-28">
       <div className="container">
@@ -44,38 +58,52 @@ const FeaturesCards = () => {
 
         <div className="mt-36 md:mt-48 flex">
           <div className="flex flex-none gap-8">
-            {data.map(({ color, description, image, title }, i) => {
+            {data.map(({ color, description, image, title }, cardIndex) => {
               return (
-                <Card
-                  key={i}
-                  color={color}
-                  description={description}
-                  className="max-w-sm md:max-w-md group"
+                <div
+                key={cardIndex}
+                  className="inline-flex transition-all duration-500"
+                  style={{
+                    transform: `translateX(calc((-100% - 2rem) * ${selectedCardIndex}))`,
+                    transition: 'transform 0.5s ease-in-out',
+                  }}
+                  onMouseEnter={() => setIsHover(true)}
+                  onMouseLeave={() => setIsHover(false)}
                 >
-                  <div className="flex justify-center -mt-28">
-                    <div className="relative inline-flex">
-                      <div className="absolute h-4 w-full top-[calc(100%+16px)] bg-zinc-950/70 rounded-[100%] [mask-image:radial-gradient(closest-side,black,transparent)] group-hover:bg-zinc-950/30 transition duration-300"></div>
-                      <img
-                        src={image}
-                        className="size-40 group-hover:-translate-y-6 duration-300"
-                      />
+                  <Card
+                    color={color}
+                    description={description}
+                    className="max-w-sm md:max-w-md group"
+                  >
+                    <div className="flex justify-center -mt-28">
+                      <div className="relative inline-flex">
+                        <div className="absolute h-4 w-full top-[calc(100%+16px)] bg-zinc-950/70 rounded-[100%] [mask-image:radial-gradient(closest-side,black,transparent)] group-hover:bg-zinc-950/30 transition duration-300"></div>
+                        <img
+                          src={image}
+                          className="size-40 group-hover:-translate-y-6 duration-300"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <h3 className="font-heading font-black text-3xl mt-12">
-                    {title}
-                  </h3>
-                </Card>
+                    <h3 className="font-heading font-black text-3xl mt-12">
+                      {title}
+                    </h3>
+                  </Card>
+                </div>
               );
             })}
           </div>
         </div>
         <div className="flex items-center justify-center mt-10">
           <div className="inline-flex bg-zinc-950 gap-4 p-2.5 rounded-full">
-            {data.map(({ title }) => {
+            {data.map(({ title }, dotIndex) => {
               return (
                 <div
                   key={title}
-                  className="size-2.5 bg-zinc-500 rounded-full cursor-pointer  "
+                  className={twMerge(
+                    'size-2.5 bg-zinc-500 rounded-full cursor-pointer',
+                    dotIndex === selectedCardIndex && 'bg-zinc-300',
+                  )}
+                  onClick={() => setSelectedCardIndex(dotIndex)}
                 ></div>
               );
             })}
