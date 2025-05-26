@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import CutCornerButton from '../components/CutCornerButton';
 import TextButton from '../components/TextButton';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const items = [
   'Experience the power of blockchain technology.',
@@ -10,6 +11,62 @@ const items = [
 ];
 
 const FeaturesGrid = () => {
+  const torusKnotRef = useRef(null);
+  const firstHemisphereRef = useRef(null);
+
+  // For torus knot animation
+  const { scrollYProgress } = useScroll({
+    target: torusKnotRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const torusKnotTranslate = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const torusKnotRotate = useTransform(scrollYProgress, [0, 1], [30, -30]);
+
+  // For first hemisphere animation
+  const { scrollYProgress: firstHemisphereProgress } = useScroll({
+    target: firstHemisphereRef,
+    offset: ['start end', 'end start'],
+  });
+  const firstHemisphereTranslate = useTransform(
+    firstHemisphereProgress,
+    [0, 1],
+    [50, -50],
+  );
+  const firstHemisphereRotate = useTransform(
+    firstHemisphereProgress,
+    [0, 1],
+    [-20, -50],
+  );
+
+  const coneRef = useRef(null);
+  const secondHemisphereRef = useRef(null);
+
+  // For torus knot animation
+  const { scrollYProgress: coneProgress } = useScroll({
+    target: coneRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const coneTranslate = useTransform(coneProgress, [0, 1], [100, -100]);
+  const coneRotate = useTransform(coneProgress, [0, 1], [12, 45]);
+
+  // For second hemisphere animation
+  const { scrollYProgress: secondHemisphereProgress } = useScroll({
+    target: secondHemisphereRef,
+    offset: ['start end', 'end start'],
+  });
+  const secondHemisphereTranslate = useTransform(
+    secondHemisphereProgress,
+    [0, 1],
+    [50, -50],
+  );
+  const secondHemisphereRotate = useTransform(
+    secondHemisphereProgress,
+    [0, 1],
+    [-20, 10],
+  );
+
   return (
     <section className="py-24 overflow-x-clip">
       <div className="container">
@@ -40,15 +97,25 @@ const FeaturesGrid = () => {
             </div>
             <div className="hidden md:block">
               <div className="relative inline-flex z-0">
-                <img
+                <motion.img
                   src="/assets/images/torus-knot.png"
                   alt="Torus Knot 3D"
                   className="size-96 max-w-none"
+                  ref={torusKnotRef}
+                  style={{
+                    translateY: torusKnotTranslate,
+                    rotate: torusKnotRotate,
+                  }}
                 />
-                <img
+                <motion.img
                   src="/assets/images/hemisphere.png"
                   alt="Hemisphere 3D"
                   className="absolute size-96 top-3/4 -z-10 scale-x-[-1]"
+                  ref={firstHemisphereRef}
+                  style={{
+                    translateY: firstHemisphereTranslate,
+                    rotate: firstHemisphereRotate,
+                  }}
                 />
               </div>
             </div>
@@ -56,15 +123,25 @@ const FeaturesGrid = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="relative hidden md:block">
               <div className="absolute right-0 z-0">
-                <img
+                <motion.img
                   src="/assets/images/cone.png"
                   alt="Cone Knot 3D"
                   className="size-96 max-w-none rotate-12"
+                  ref={coneRef}
+                  style={{
+                    translateY: coneTranslate,
+                    rotate: coneRotate,
+                  }}
                 />
-                <img
+                <motion.img
                   src="/assets/images/hemisphere.png"
                   alt="Hemisphere 3D"
                   className="absolute top-3/4 -z-10"
+                  ref={secondHemisphereRef}
+                  style={{
+                    translateY: secondHemisphereTranslate,
+                    rotate: secondHemisphereRotate,
+                  }}
                 />
               </div>
             </div>
