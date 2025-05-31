@@ -8,10 +8,10 @@ const CallToAction = () => {
       <div className="container">
         <div className="relative">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <Hexagon className="size-[700px]" />
+            <Hexagon className="size-[700px]" size={700}/>
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <Hexagon className="size-[1100px]" />
+            <Hexagon className="size-[1100px]" size={1100} reverse/>
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <Circle className="absolute left-0 -top-[400px]">
@@ -19,7 +19,7 @@ const CallToAction = () => {
             </Circle>
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <Circle className="absolute left-[600px] -top-[70px]">
+            <Circle className="absolute -left-[600px] -top-[70px]">
               <img src="/assets/images/cylinder.png" className="size-[140px]" />
             </Circle>
           </div>
