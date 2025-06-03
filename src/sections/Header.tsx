@@ -50,7 +50,7 @@ const HeaderSection = () => {
               <CutCornerButton className="hidden md:inline-flex">
                 Get Started
               </CutCornerButton>
-              <div className="size-10 relative" onClick={handleToggleBar}>
+              <div className="size-10 relative md:hidden block" onClick={handleToggleBar}>
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                   <div
                     className={twMerge(
