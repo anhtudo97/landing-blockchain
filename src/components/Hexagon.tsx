@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -20,7 +21,7 @@ const Hexagon = ({
   const pathRef = useRef<SVGPathElement>(null);
   const [totalPathLength, setTotalPathLength] = useState<number>();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const path = pathRef.current;
     if (!path) return;
     const length = path.getTotalLength();
