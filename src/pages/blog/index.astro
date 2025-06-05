@@ -8,8 +8,8 @@ import Default from '../../layouts/Default.astro';
 import { getCollection } from 'astro:content';
 import { motion } from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
-import { getPostColorFromCategory } from '../../utils';
 import InteriorContent from '../../components/InteriorContent.astro';
+import { getPostColorFromCategory } from '../../utils';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
